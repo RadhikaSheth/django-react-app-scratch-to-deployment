@@ -1,0 +1,5 @@
+database_engine = "django.db.backends.postgresql_psycopg2"
+database_name = "spelldb"
+database_user = "radhika"
+database_password = "potter"
+database_host = "localhost"
