@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-from Hogwarts import secret
+from Hogwarts import local_settings
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -87,15 +87,15 @@ WSGI_APPLICATION = 'Hogwarts.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': secret.database_engine,
+        'ENGINE': local_settings.database_engine,
 
-        'NAME': secret.database_name,
+        'NAME': local_settings.database_name,
 
-        'USER': secret.database_user,
+        'USER': local_settings.database_user,
 
-        'PASSWORD': secret.database_password,
+        'PASSWORD': local_settings.database_password,
 
-        'HOST': secret.database_host,
+        'HOST': local_settings.database_host,
 
         'PORT': '',
     }
