@@ -9,13 +9,14 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-from Hogwarts import local_settings
+
 from pathlib import Path
 from django.conf import settings
 import django_heroku
 import dotenv
 import dj_database_url
 import os
+
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -93,19 +94,6 @@ WSGI_APPLICATION = 'Hogwarts.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': local_settings.database_engine,
-
-        'NAME': local_settings.database_name,
-
-        'USER': local_settings.database_user,
-
-        'PASSWORD': local_settings.database_password,
-
-        'HOST': local_settings.database_host,
-
-        'PORT': '',
-    }
 }
 CORS_ORIGIN_ALLOW_ALL = True
 
@@ -156,3 +144,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 django_heroku.settings(locals())
+
+try:
+    from .local_settings import *
+except ImportError:
+    pass
