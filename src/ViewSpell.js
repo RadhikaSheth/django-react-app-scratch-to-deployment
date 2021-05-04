@@ -32,7 +32,7 @@ class ViewSpell extends React.Component {
         }
     }
     componentDidMount() {
-        axios.get('http://127.0.0.1:8000/api/view/')
+        axios.get('https://spells-at-hogwarts.herokuapp.com/api/view/')
             .then(response => {
                 console.log(response);
                 this.setState({

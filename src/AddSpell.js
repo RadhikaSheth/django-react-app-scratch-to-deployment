@@ -33,7 +33,7 @@ class AddSpell extends React.Component {
         }
     }
     SubmitData() {
-        axios.post('http://127.0.0.1:8000/api/create/', { 
+        axios.post('https://spells-at-hogwarts.herokuapp.com/api/create/', { 
             name: this.state.name,
             description : this.state.description 
         })
