@@ -13,8 +13,6 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 from django.conf import settings
 import django_heroku
-import dotenv
-import dj_database_url
 import os
 
 
