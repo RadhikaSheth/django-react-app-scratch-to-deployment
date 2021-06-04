@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.6, 3.7, 3.8]
+        python-version: [3.9.4]
         node-version: [12.x]
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -51,6 +51,7 @@ jobs:
         
       - name: Run Migrations
         run: python manage.py makemigrations
+<<<<<<< HEAD
 
 
       - 
@@ -68,11 +69,23 @@ jobs:
         env:
           EMAIL: shethradhika9@gmail.com
           HEROKU_AUTH_TOKEN: ${{ secrets.HEROKU_AUTH_TOKEN }}
+=======
+      - name: Login to Heroku 
+        env: 
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: heroku container:login
+          
+>>>>>>> eb0d15b7b62c73b1ba39a7eaa77cbf7fcee43b9e
       - name: "Add remote"
         shell: "bash"
         run: |
-          heroku git:remote --app spells-at-hogwarts
+          heroku git:remote -a spells-at-hogwarts
+          
+      - name: "Pull "
+        shell: "bash"
+        run: |
+          git pull heroku 
       - name: "Push to heroku"
         shell: "bash"
         run: |
-          git push heroku 
+          git push heroku main 
