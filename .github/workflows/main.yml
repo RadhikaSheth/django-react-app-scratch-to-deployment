@@ -75,7 +75,7 @@ jobs:
       - name: "Pull "
         shell: "bash"
         run: |
-          git pull heroku main
+          git pull heroku 
       - name: "Push to heroku"
         shell: "bash"
         run: |
