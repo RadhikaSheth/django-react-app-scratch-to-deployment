@@ -51,21 +51,10 @@ jobs:
         
       - name: Run Migrations
         run: python manage.py makemigrations
-      
-      - name: Create .netrc for Heroku Auth
-        shell: "bash"
-        run: |
-          `cat >~/.netrc <<EOF
-          machine api.heroku.com
-              login $EMAIL
-              password $HEROKU_AUTH_TOKEN
-          machine git.heroku.com
-              login $EMAIL
-              password $HEROKU_AUTH_TOKEN
-          EOF`
-        env:
-          EMAIL: shethradhika9@gmail.com
-          HEROKU_AUTH_TOKEN: ${{ secrets.HEROKU_AUTH_TOKEN }}
+      - name: Login to Heroku 
+        env: 
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: heroku container:login
           
       - name: "Add remote"
         shell: "bash"
