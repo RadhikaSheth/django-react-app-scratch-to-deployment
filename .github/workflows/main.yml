@@ -66,10 +66,16 @@ jobs:
         env:
           EMAIL: shethradhika9@gmail.com
           HEROKU_AUTH_TOKEN: ${{ secrets.HEROKU_AUTH_TOKEN }}
+          
       - name: "Add remote"
         shell: "bash"
         run: |
           heroku git:remote -a spells-at-hogwarts
+          
+      - name: "Pull "
+        shell: "bash"
+        run: |
+          git pull heroku main
       - name: "Push to heroku"
         shell: "bash"
         run: |
