@@ -53,6 +53,7 @@ jobs:
         run: python manage.py makemigrations
       
       - name: Create .netrc for Heroku Auth
+        shell: "bash"
         run: |
           `cat >~/.netrc <<EOF
           machine api.heroku.com
