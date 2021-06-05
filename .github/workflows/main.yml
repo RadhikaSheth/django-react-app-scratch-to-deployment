@@ -52,24 +52,8 @@ jobs:
       - name: Run Migrations
         run: python manage.py makemigrations
         
-      - name: Create .netrc for Heroku Auth
-        run: |
-          `cat >~/.netrc <<EOF
-          machine api.heroku.com
-              login $EMAIL
-              password $HEROKU_AUTH_TOKEN
-          machine git.heroku.com
-              login $EMAIL
-              password $HEROKU_AUTH_TOKEN
-          EOF`
-        env:
-          EMAIL: shethradhika9@gmail.com
-          HEROKU_AUTH_TOKEN: ${{ secrets.HEROKU_AUTH_TOKEN }}
-      - name: "Add remote"
-        shell: "bash"
-        run: |
-          heroku git:remote -a spells-at-hogwarts
-      - name: "Push to heroku"
-        shell: "bash"
-        run: |
-          git push heroku main 
+      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+        with:
+          heroku_api_key: ${{secrets.HEROKU_AUTH_TOKEN}}
+          heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
+          heroku_email: ${{secrets.EMAIL}}
