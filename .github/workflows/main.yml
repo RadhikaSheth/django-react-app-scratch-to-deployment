@@ -52,15 +52,26 @@ jobs:
       - name: Run Migrations
         run: python manage.py makemigrations
         
-      - name: Login to Heroku Container registry
-        env: 
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: heroku container:login
-      - name: Build and push
+      - name: "Create .netrc for Heroku Auth"
+        shell: bash
         env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: heroku container:push -a spells-at-hogwarts web 
-      - name: Release
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: heroku container:release -a spells-at-hogwarts web
+          EMAIL: shethradhika9@gmail.com
+          HEROKU_AUTH_TOKEN: ${{ secrets.HEROKU_AUTH_TOKEN }}
+        run: |
+          `cat >~/.netrc <<EOF
+          machine api.heroku.com
+              login $EMAIL
+              password $HEROKU_AUTH_TOKEN
+          machine git.heroku.com
+              login $EMAIL
+              password $HEROKU_AUTH_TOKEN
+          EOF`
+        
+      - name: "Add remote"
+        shell: "bash"
+        run: |
+          heroku git:remote --app spells-at-hogwarts
+      - name: "Push to heroku"
+        shell: "bash"
+        run: |
+          git push heroku HEAD:main
