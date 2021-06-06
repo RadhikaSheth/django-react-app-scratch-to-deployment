@@ -74,4 +74,4 @@ jobs:
       - name: "Push to heroku"
         shell: "bash"
         run: |
-          git push heroku HEAD:main
+          git push heroku main
