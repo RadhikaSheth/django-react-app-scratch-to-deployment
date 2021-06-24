@@ -1,21 +1,77 @@
-name: Deploy
+# This is a basic workflow to help you get started with Actions
 
+name: Django-React-App
+
+# Controls when the action will run. 
 on:
+  # Triggers the workflow on push or pull request events but only for the main branch
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  heroku_git_deploy_job:
-      runs-on: ubuntu-latest
-      name: Git Deploy job- A job to deploy django app to heroku using git
-      steps:
-        - name: Checkout
-          uses: actions/checkout@v2
-        - name: Deploy django to heroku
-          uses: nyakaz73/heroku-django-deploy@v0.68 
-          with: 
-            heroku_app_name : ${{ secrets.HEROKU_APP_NAME }}
-            heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-            heroku_email_address: ${{ secrets.EMAIL }}
-            use_git: true
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.9.4]
+        node-version: [12.x]
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+          
+      - name: Install Packages
+        run: npm install
+        
+      - name: Build page
+        run: npm run build
+        
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      
+      - name: Installs dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+        
+      - name: Run Migrations
+        run: python manage.py makemigrations
+        
+      - name: "Create .netrc for Heroku Auth"
+        shell: bash
+        env:
+          EMAIL: shethradhika9@gmail.com
+          HEROKU_AUTH_TOKEN: ${{ secrets.HEROKU_AUTH_TOKEN }}
+        run: |
+          `cat >~/.netrc <<EOF
+          machine api.heroku.com
+              login $EMAIL
+              password $HEROKU_AUTH_TOKEN
+          machine git.heroku.com
+              login $EMAIL
+              password $HEROKU_AUTH_TOKEN
+          EOF`
+        
+      - name: "Add remote"
+        shell: "bash"
+        run: |
+          heroku git:remote --app spells-at-hogwarts
+      - name: "Push to heroku"
+        shell: "bash"
+        run: |
+          git push heroku HEAD:main
