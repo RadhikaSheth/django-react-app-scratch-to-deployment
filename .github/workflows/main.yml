@@ -57,9 +57,4 @@ jobs:
           heroku_app_name: ${{secrets.HEROKU_APP_NAME}} #Must be unique in Heroku
           heroku_email: ${{secrets.EMAIL}}
           dontautocreate: true
-<<<<<<< HEAD
           procfile: true
-=======
-          procfile: true
-          
->>>>>>> 321dc977a75983b75a428756fea551866b5c3e1e
