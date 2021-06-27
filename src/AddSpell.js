@@ -62,9 +62,9 @@ class AddSpell extends React.Component {
         return (
             <div style={{marginTop:"3%"}}>
                 <form className={classes.root} noValidate autoComplete="off">
-                    <TextField required name="name" style = {{width:"500px"}}value={this.state.name} label="Spell Name" onChange={this.handleChange.bind(this)}/>
+                    <TextField required name="name" style = {{width:"500px"}}value={this.state.name} label="Add Spell Name" onChange={this.handleChange.bind(this)}/>
                     <br />
-                    <TextField required name="description" style = {{width:"500px"}} value={this.state.description} onChange={this.handleChange.bind(this)} label="Description" />
+                    <TextField required name="Add Spell Description" style = {{width:"500px"}} value={this.state.description} onChange={this.handleChange.bind(this)} label="Description" />
                     <br />
                     <Button className={classes.buttonStyle} onClick={this.handleSubmit.bind(this)}> Submit</Button>
                 </form>
