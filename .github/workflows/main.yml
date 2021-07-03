@@ -25,30 +25,6 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-
-#       - name: Use Node.js ${{ matrix.node-version }}
-#         uses: actions/setup-node@v1
-#         with:
-#           node-version: ${{ matrix.node-version }}
-          
-#       - name: Install Packages
-#         run: npm install
-        
-#       - name: Build page
-#         run: npm run build
-        
-#       - name: Set up Python ${{ matrix.python-version }}
-#         uses: actions/setup-python@v2
-#         with:
-#           python-version: ${{ matrix.python-version }}
-      
-#       - name: Installs dependencies
-#         run: |
-#           python -m pip install --upgrade pip
-#           pip install -r requirements.txt
-        
-#       - name: Run Migrations
-#         run: python manage.py makemigrations
         
       - name: Deploy
         uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
